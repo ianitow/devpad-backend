@@ -49,7 +49,7 @@ class UserController {
       return res.json({ user });
     } catch (err) {
       return res
-        .status(400)
+        .status(404)
         .json({ error: "Não foi possivel obter as informações do usuário." });
     }
   }
