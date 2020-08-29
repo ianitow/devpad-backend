@@ -9,7 +9,7 @@ const TagSchema = new Schema({
     default: "#000",
     match: [/^#([0-9a-f]{3}){1,2}$/i, "Please fill a correct color."],
   },
-  user_id: { type: Schema.Types.ObjectId },
+  user_id: { type: Schema.Types.ObjectId, required: true },
 });
 
 export default mongoose.model("Tag", TagSchema);
