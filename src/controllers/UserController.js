@@ -23,7 +23,7 @@ class UserController {
       //Procurar usuário
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ error: "Usuário não encontrado" });
+        return res.status(404).json({ error: "Usuário não encontrado" });
       }
 
       //Verificar senha
@@ -45,11 +45,11 @@ class UserController {
   async show(req, res) {
     try {
       const { user_id } = req;
-      const user = await User.findById(user_id);
+      const user = await User.findById(user_id).select("-password").exec();
       return res.json({ user });
     } catch (err) {
       return res
-        .status(400)
+        .status(404)
         .json({ error: "Não foi possivel obter as informações do usuário." });
     }
   }

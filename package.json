@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "devpad-backend",
   "version": "0.0.0",
   "private": true,

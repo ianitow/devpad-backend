@@ -24,7 +24,6 @@ const UserSchema = new Schema(
     password: {
       type: String,
       min: 6,
-      select: false,
     },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
     notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
@@ -40,6 +39,7 @@ UserSchema.pre("save", async function hashPassword(next) {
 
 UserSchema.methods = {
   compareHash(hash) {
+    console.log(hash);
     return bcrypt.compare(hash, this.password);
   },
 
