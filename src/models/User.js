@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const UserSchema = new Schema(
   {
@@ -18,21 +18,19 @@ const UserSchema = new Schema(
       unique: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
+        'Please fill a valid email address',
       ],
     },
     password: {
       type: String,
       min: 6,
     },
-    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
-    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
   },
   { timestamps: true }
 );
 
-UserSchema.pre("save", async function hashPassword(next) {
-  if (!this.isModified("password")) next();
+UserSchema.pre('save', async function hashPassword(next) {
+  if (!this.isModified('password')) next();
 
   this.password = await bcrypt.hash(this.password, 8);
 });
@@ -44,10 +42,10 @@ UserSchema.methods = {
   },
 
   generateToken() {
-    return jwt.sign({ id: this.id }, "secret", {
+    return jwt.sign({ id: this.id }, 'secret', {
       expiresIn: 86400,
     });
   },
 };
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model('User', UserSchema);
