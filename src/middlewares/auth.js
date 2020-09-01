@@ -8,6 +8,7 @@ export default async (req, res, next) => {
     return res.status(401).send({ error: 'No token provided' });
   }
 
+
   const [, token] = authHeader.split(' ');
 
   try {
@@ -17,6 +18,6 @@ export default async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(401).send({ error: 'Token invalid' });
+
   }
 };

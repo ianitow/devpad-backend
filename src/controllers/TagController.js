@@ -25,11 +25,7 @@ class TagController {
     await tag.save(function (err, tag) {
       if (err) return console.log("ERRO", err);
 
-      res.send({
-        name: tag.name,
-        color: tag.color,
-        message: "Tag was created successfully",
-      });
+      res.send({ ...tag._doc, message: "Tag was created successfully" });
     });
   }
 
