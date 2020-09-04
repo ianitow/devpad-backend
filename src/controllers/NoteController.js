@@ -52,7 +52,30 @@ class NoteController {
       return res.status(400).json({ error: 'Error registering note' });
     }
   }
-  async update(req, res) {}
+  async update(req, res) {
+    const { user_id } = req;
+    const { id } = req.params;
+    const new_data = req.body;
+    try {
+      const note = await Note.findById(id);
+
+      if (!note) {
+        return res.status(400).json({ error: 'Note was not found!' });
+      }
+
+      if (note.author_id != user_id) {
+        return res.status(400).json({ error: 'Invalid user!' });
+      }
+
+      const note_data = await Note.findOneAndUpdate({ _id: id }, new_data, {
+        new: true,
+      });
+
+      return res.json(note_data);
+    } catch (err) {
+      return res.status(400).json({ error: 'Error updating data!' });
+    }
+  }
 
   async delete(req, res) {
     const { user_id } = req;
