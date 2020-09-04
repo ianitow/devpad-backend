@@ -17,11 +17,11 @@ class NoteController {
       const note = await Note.findById(id);
 
       if (!note) {
-        return res.status(400).json({ error: 'Note was not found!' });
+        return res.status(404).json({ error: 'Note was not found!' });
       }
 
       if (note.author_id != user_id) {
-        return res.status(400).json({ error: 'Invalid user!' });
+        return res.status(401).json({ error: 'Invalid user!' });
       }
 
       return res.status(200).json(note);
@@ -47,7 +47,7 @@ class NoteController {
       } else note.url = null;
 
       const note_data = await Note.create(note);
-      return res.json(note_data);
+      return res.status(201).json(note_data);
     } catch (err) {
       return res.status(400).json({ error: 'Error registering note' });
     }
@@ -60,11 +60,11 @@ class NoteController {
       const note = await Note.findById(id);
 
       if (!note) {
-        return res.status(400).json({ error: 'Note was not found!' });
+        return res.status(404).json({ error: 'Note was not found!' });
       }
 
       if (note.author_id != user_id) {
-        return res.status(400).json({ error: 'Invalid user!' });
+        return res.status(401).json({ error: 'Invalid user!' });
       }
 
       const note_data = await Note.findOneAndUpdate({ _id: id }, new_data, {
@@ -85,17 +85,17 @@ class NoteController {
       const note = await Note.findById(id);
 
       if (!note) {
-        return res.status(400).json({ error: 'Note was not found!' });
+        return res.status(404).json({ error: 'Note was not found!' });
       }
 
       if (note.author_id != user_id) {
-        return res.status(400).json({ error: 'Invalid user!' });
+        return res.status(401).json({ error: 'Invalid user!' });
       }
 
       await note.remove();
 
       return res
-        .status(200)
+        .status(204)
         .json({ message: 'Note annotation has been deleted!' });
     } catch (err) {
       return res.status(400).json({ error: 'Error deleting data!' });
