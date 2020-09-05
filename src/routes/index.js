@@ -16,9 +16,11 @@ routes.post('/register', UserController.register);
 routes.post('/login', UserController.login);
 routes.use(auth);
 //Note
-routes.get('/note', NoteController.index);
+routes.get('/notes', NoteController.index);
 routes.get('/note/:id', NoteController.show);
 routes.post('/note', NoteController.create);
+routes.put('/note/:id', NoteController.update);
+routes.delete('/note/:id', NoteController.delete);
 
 //User
 routes.get('/user', UserController.show);

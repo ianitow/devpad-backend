@@ -6,7 +6,7 @@ const mongo_URL =
 
 mongoose.connect(mongo_URL, {
   useNewUrlParser: true,
-  useFindAndModify: true,
+  useFindAndModify: false,
   useCreateIndex: true,
 });
 
