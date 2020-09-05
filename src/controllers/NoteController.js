@@ -2,10 +2,11 @@ import Note from '../models/Note';
 
 class NoteController {
   async index(req, res) {
-    console.log(req.user_id);
     const note = await Note.find({
       author_id: req.user_id,
-    }).populate('tags');
+    })
+      .populate('tags')
+      .select('-content');
 
     return res.json(note);
   }
