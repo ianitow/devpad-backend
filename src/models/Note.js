@@ -15,6 +15,7 @@ const NoteSchema = new Schema({
   content: Object,
   isRedirect: Boolean,
   url: String,
+  path: String
 });
 
 export default mongoose.model('Note', NoteSchema);

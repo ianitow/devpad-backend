@@ -1,5 +1,5 @@
 import Note from '../models/Note';
-
+import createPath from '../services/NotePath';
 class NoteController {
   async index(req, res) {
     const note = await Note.find({
@@ -31,9 +31,32 @@ class NoteController {
     }
   }
 
+  async path(req, res) {
+    const { user_id } = req;
+    const { path } = req.params;
+    try {
+      const note = await Note.findOne({ path });
+
+      if (!note) {
+        return res.status(404).json({ error: 'Note was not found!' });
+      }
+
+      if (note.author_id != user_id) {
+        return res.status(401).json({ error: 'Invalid user!' });
+      }
+
+      return res.status(200).json(note);
+    } catch (err) {
+      return res.status(400).json({ error: 'Error retrieving data!' });
+    }
+  }
+
   async create(req, res) {
     let { title, tags, content, isRedirect, url } = req.body;
     try {
+      const path = createPath(title);
+      console.log(path);
+
       let note = {
         title,
         author_id: req.user_id,
@@ -41,6 +64,7 @@ class NoteController {
         isRedirect,
         content,
         url,
+        path,
       };
 
       if (isRedirect) {
@@ -53,6 +77,7 @@ class NoteController {
       return res.status(400).json({ error: 'Error registering note' });
     }
   }
+
   async update(req, res) {
     const { user_id } = req;
     const { id } = req.params;
