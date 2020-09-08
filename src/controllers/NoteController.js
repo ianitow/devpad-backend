@@ -15,7 +15,7 @@ class NoteController {
     const { user_id } = req;
     const { id } = req.params;
     try {
-      const note = await Note.findById(id);
+      const note = await Note.findById(id).populate('tags');
 
       if (!note) {
         return res.status(404).json({ error: 'Note was not found!' });
@@ -35,7 +35,7 @@ class NoteController {
     const { user_id } = req;
     const { path } = req.params;
     try {
-      const note = await Note.findOne({ path });
+      const note = await Note.findOne({ path }).populate('tags');
 
       if (!note) {
         return res.status(404).json({ error: 'Note was not found!' });
