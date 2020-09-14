@@ -9,6 +9,10 @@ class UserController {
       if (await User.findOne({ email })) {
         return res.status(400).json({ error: 'Usuário já existe!' });
       }
+
+      if (await User.findOne({ username })) {
+        return res.status(400).json({ error: 'Usuário já existe!' });
+      }
       // Criar usuário
       const user = await User.create(req.body);
       return res.json({ user });
@@ -35,6 +39,7 @@ class UserController {
       //Gerar token do usuário
       return res.json({
         token: user.generateToken(),
+        user,
       });
     } catch (err) {
       console.log(err);

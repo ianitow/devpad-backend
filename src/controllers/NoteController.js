@@ -55,7 +55,6 @@ class NoteController {
     let { title, tags, content, isRedirect, url } = req.body;
     try {
       const path = createPath(title);
-      console.log(path);
 
       let note = {
         title,
