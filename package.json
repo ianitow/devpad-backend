@@ -6,7 +6,8 @@
     "dev": "nodemon -r esm index.js",
     "dev:debug": "nodemon --inspect index.js",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "start": "node dist/server.js"
+    "start": "nodemon -r esm index.js",
+    "server": "node dist/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
